@@ -44,12 +44,49 @@ class UserController{
         return res.status(200).json({status:"Usuário cadastrado com sucesso."});
     }
 
-    update(req:Request, res:Response){
+    async update(req:Request, res:Response){
+        const result = await prisma.user.findFirst({
+            where:{
+                id: parseInt(req.params.id),
+            }
+        });
 
+        if(!result){
+            return res.status(400).json({status: "ID de usuário não encontrado."});
+        }
+
+        const {nome, sobrenome} = req.body;
+
+        await prisma.user.update({
+            where:{
+                id: parseInt(req.params.id)
+            },
+            data:{
+                nome, sobrenome
+            }
+        });
+
+        return res.status(200).json({status:"Dados do usuário alterados com sucesso."});
     }
 
-    delete(req:Request, res:Response){
+    async delete(req:Request, res:Response){
+        const result = await prisma.user.findFirst({
+            where:{
+                id: parseInt(req.params.id),
+            }
+        });
 
+        if(!result){
+            return res.status(400).json({status: "ID de usuário não encontrado."});
+        }
+
+        await prisma.user.delete({
+            where:{
+                id: parseInt(req.params.id)
+            }
+        });
+
+        return res.status(200).json({status:"Usuário deletado com sucesso."});
     }
 }
 
