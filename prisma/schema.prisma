@@ -27,6 +27,6 @@ model Training {
   secoes Int
   carga Int
   diadasemana Int
-  user User @relation(fields:[userId], references:[id])
+  user User @relation(fields:[userId], references:[id], onDelete: Cascade)
   userId Int
 }
