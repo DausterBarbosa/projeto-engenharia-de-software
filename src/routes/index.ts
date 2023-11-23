@@ -10,8 +10,8 @@ const router = Router();
 router.get("/coach/users", coachController.getAllUsers);
 router.delete("/coach/deleteuser/:id", coachController.deleteUser);
 
-router.get("/training/:id", trainingController.getTraining);
-router.post("/training/crate", trainingController.create);
+router.get("/training/:id", trainingController.getAllTrainings);
+router.post("/training/create", trainingController.create);
 router.put("/training/:id", trainingController.update);
 router.delete("/training/:id", trainingController.delete);
 

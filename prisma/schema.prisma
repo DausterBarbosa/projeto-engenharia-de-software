@@ -16,5 +16,17 @@ model User {
   sobrenome String
   email String
   senha String
+  trainings Training[]
   @@unique([email])
+}
+
+model Training {
+  id Int @id @default(autoincrement())
+  nome String
+  repeticoes Int
+  secoes Int
+  carga Int
+  diadasemana Int
+  user User @relation(fields:[userId], references:[id])
+  userId Int
 }

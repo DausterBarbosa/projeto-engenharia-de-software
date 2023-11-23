@@ -14,7 +14,7 @@ class UserController{
         });
 
         if (!result){
-            return res.status(400).json({status:"Usuário não encontrado."});
+            return res.status(400).json({error:true, status:"Usuário não encontrado."});
         }
 
         return res.status(200).json(result);
@@ -30,7 +30,7 @@ class UserController{
         });
 
         if (emailVerification){
-            return res.status(400).json({status: "Email já cadastrado."})
+            return res.status(400).json({error:true, status: "Email já cadastrado."})
         }
 
         const hash = await bcrypt.hash(senha, 5);
@@ -41,7 +41,7 @@ class UserController{
             }
         });
 
-        return res.status(200).json({status:"Usuário cadastrado com sucesso."});
+        return res.status(200).json({error:false, status:"Usuário cadastrado com sucesso."});
     }
 
     async update(req:Request, res:Response){
@@ -52,7 +52,7 @@ class UserController{
         });
 
         if(!result){
-            return res.status(400).json({status: "ID de usuário não encontrado."});
+            return res.status(400).json({error:true, status: "ID de usuário não encontrado."});
         }
 
         const {nome, sobrenome} = req.body;
@@ -66,7 +66,7 @@ class UserController{
             }
         });
 
-        return res.status(200).json({status:"Dados do usuário alterados com sucesso."});
+        return res.status(200).json({error:false, status:"Dados do usuário alterados com sucesso."});
     }
 
     async delete(req:Request, res:Response){
@@ -77,7 +77,7 @@ class UserController{
         });
 
         if(!result){
-            return res.status(400).json({status: "ID de usuário não encontrado."});
+            return res.status(400).json({error:true, status: "ID de usuário não encontrado."});
         }
 
         await prisma.user.delete({
@@ -86,7 +86,7 @@ class UserController{
             }
         });
 
-        return res.status(200).json({status:"Usuário deletado com sucesso."});
+        return res.status(200).json({error:false, status:"Usuário deletado com sucesso."});
     }
 }
 
