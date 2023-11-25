@@ -6,8 +6,36 @@ import {PrismaClient} from "@prisma/client";
 const prisma = new PrismaClient();
 
 class UserController{
+    async getProfile(req:Request, res:Response){
+        const result = await prisma.user.findFirst({
+            select:{
+                id:true,
+                nome:true,
+                sobrenome:true,
+                email:true,
+                coach:true
+            },
+            where:{
+                id: req.user_id,
+            }
+        });
+
+        if (!result){
+            return res.status(400).json({error:true, status:"Usuário não encontrado."});
+        }
+
+        return res.status(200).json(result);
+    }
+
     async getUser(req:Request, res:Response){
         const result = await prisma.user.findFirst({
+            select:{
+                id:true,
+                nome:true,
+                sobrenome:true,
+                email:true,
+                coach:true
+            },
             where:{
                 id: parseInt(req.params.id),
             }
@@ -21,7 +49,7 @@ class UserController{
     }
 
     async create(req:Request, res:Response){
-        const {nome, sobrenome, email, senha} = req.body;
+        const {nome, sobrenome, email, senha, coach} = req.body;
 
         const emailVerification = await prisma.user.findFirst({
             where: {
@@ -37,7 +65,7 @@ class UserController{
 
         await prisma.user.create({
             data: {
-                nome, sobrenome, email, senha: hash
+                nome, sobrenome, email, senha: hash, coach, 
             }
         });
 

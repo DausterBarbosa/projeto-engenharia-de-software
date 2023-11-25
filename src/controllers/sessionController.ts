@@ -34,7 +34,7 @@ class SessionController{
             expiresIn: "60m"
         });
 
-        return res.status(200).json({token});
+        return res.status(200).json({error:false, token});
     }
 }
 
