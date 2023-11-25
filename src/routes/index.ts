@@ -7,6 +7,8 @@ import trainingController from "../controllers/trainingController";
 
 const router = Router();
 
+router.post("/login", sessionController.login);
+
 router.get("/coach/users", coachController.getAllUsers);
 router.delete("/coach/user/:id", coachController.deleteUser);
 
