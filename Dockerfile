@@ -1,6 +1,7 @@
 FROM node:18
 
 ENV DATABASE_URL=
+ENV SECRET_KEY=
 
 WORKDIR /app
 

@@ -1,3 +1,7 @@
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
 import {Request, Response, NextFunction} from "express";
 
 import jsonwebtoken from "jsonwebtoken";
@@ -15,7 +19,7 @@ export default async function authMiddleware(req:Request, res:Response, next:Nex
     }
 
     try {
-        const decode = jsonwebtoken.verify(token, "BATATINHA") as any;
+        const decode = jsonwebtoken.verify(token, process.env.SECRET_KEY) as any;
 
         const user = await prisma.user.findFirst({
             where:{

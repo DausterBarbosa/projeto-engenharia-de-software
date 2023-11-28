@@ -1,3 +1,7 @@
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
 import {Request, Response} from "express";
 
 import bcrypt from "bcrypt";
@@ -29,7 +33,7 @@ class SessionController{
         const token = jsonwebtoken.sign({
             user_id: user.id.toString()
         },
-        "BATATINHA"
+        process.env.SECRET_KEY
         ,{
             expiresIn: "60m"
         });
